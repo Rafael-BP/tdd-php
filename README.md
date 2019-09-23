@@ -13,3 +13,19 @@ Tópicos abordados:
 [Certificado][]
 
 [Certificado]: 
+
+## Para rodar o projeto
+
+### Pré-Requisitos
+- Docker
+
+#### Inicializar o projeto
+
+```
+docker run --rm --interactive --tty -v "$PWD":/app --workdir=/app composer install
+```
+
+#### Rodar o projeto
+```
+docker run --rm --interactive --tty -v "$PWD":/app --workdir=/app php:7.2-cli vendor/bin/phpunit --colors tests
+```
