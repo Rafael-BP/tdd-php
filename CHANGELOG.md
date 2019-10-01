@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ### Added
-- Arquivos iniciais para comeÁo do curso
-- Primeiro tÛpico do curso
-- Segundo tÛpico do curso
+- Arquivos iniciais para come√ßo do curso
+- Primeiro t√≥pico do curso
+- Segundo t√≥pico do curso
+- Terceiro t√≥pico do curso
 
 ### Changed
-- SeÁ„o Para rodar o projeto no README
+- Se√ß√£o Para rodar o projeto no README

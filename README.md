@@ -1,5 +1,5 @@
-# Curso PHP e TDD
-Curso realizado na plataforma Alura.
+# Curso [PHP e TDD][PHP e TDD]
+Curso realizado na plataforma [Alura][Alura].
 
 Tópicos abordados:
 
@@ -10,9 +10,7 @@ Tópicos abordados:
 5. Test Driven Development
 6. Testando exceções
 
-[Certificado][]
-
-[Certificado]: 
+[Certificado][Certificado]
 
 ## Para rodar o projeto
 
@@ -22,10 +20,16 @@ Tópicos abordados:
 #### Inicializar o projeto
 
 ```
-docker run --rm --interactive --tty -v "$PWD":/app --workdir=/app composer install
+docker run --rm --interactive --tty -v ${PWD}:/app --workdir=/app composer install
 ```
 
 #### Rodar o projeto
 ```
-docker run --rm --interactive --tty -v "$PWD":/app --workdir=/app php:7.2-cli vendor/bin/phpunit --colors tests
+docker run --rm --interactive --tty -v ${PWD}:/app --workdir=/app php:7.2-cli vendor/bin/phpunit --colors tests
 ```
+
+[Certificado]: 
+
+[PHP e TDD]: https://cursos.alura.com.br/course/phpunit-tdd
+
+[Alura]: https://www.alura.com.br/
