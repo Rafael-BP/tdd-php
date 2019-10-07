@@ -2,6 +2,8 @@
 
 namespace Alura\Leilao\Service;
 
+use Alura\Leilao\Exception\LeilaoFinalizadoException;
+use Alura\Leilao\Exception\LeilaoVazioException;
 use Alura\Leilao\Model\Lance;
 use Alura\Leilao\Model\Leilao;
 
@@ -19,6 +21,12 @@ class Avaliador
      */
     public function avalia(Leilao $leilao): void
     {
+        if($leilao->isFinalizado()) {
+            throw new LeilaoFinalizadoException("Leilão já finalizado");
+        }
+        if (empty($leilao->getLances())) {
+            throw new LeilaoVazioException("Não é possível avaliar Leilão vázio");
+        }
         foreach ($leilao->getLances() as $lance) {
             if ($lance->getValor() > $this->maiorValor) {
                 $this->maiorValor = $lance->getValor();

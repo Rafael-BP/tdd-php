@@ -2,12 +2,49 @@
 
 namespace Alura\Leilao\Model;
 
+use Alura\Leilao\Exception\CincoLancesPorLeilaoException;
+use Alura\Leilao\Exception\DoisLancesConsecultivosException;
+
 class Leilao
 {
     /** @var Lance[] */
     private $lances;
     /** @var string */
     private $descricao;
+    /** @var bool */
+    private $finalizado = false;
+
+    /**
+     * @return bool
+     */
+    public function isFinalizado()
+    {
+        return $this->finalizado;
+    }
+
+    /**
+     * @param bool $finalizado
+     */
+    public function setFinalizado($finalizado)
+    {
+        $this->finalizado = $finalizado;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescricao()
+    {
+        return $this->descricao;
+    }
+
+    /**
+     * @param string $descricao
+     */
+    public function setDescricao($descricao)
+    {
+        $this->descricao = $descricao;
+    }
 
     /**
      * Leilao constructor.
@@ -25,13 +62,13 @@ class Leilao
     public function recebeLance(Lance $lance)
     {
         if (!empty($this->getLances()) && $this->isLanceDoUltimoUsuario($lance)) {
-            return;
+            throw new DoisLancesConsecultivosException("Usuário não pode propor 2 lances consecultivos");
         }
 
         $usuario = $lance->getUsuario();
         $totalLancesUsuario = $this->quantidadeLancesPorUsuario($usuario);
         if($totalLancesUsuario >= 5) {
-            return;
+            throw new CincoLancesPorLeilaoException("Usuário não pode propor mais de 5 lances por Leilão");
         }
         $this->lances[] = $lance;
     }
@@ -71,5 +108,10 @@ class Leilao
             0
         );
         return $totalLancesUsuario;
+    }
+
+    public function finaliza()
+    {
+        $this->setFinalizado(true);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Alura\Leilao\Tests\Service;
 
+use Alura\Leilao\Exception\LeilaoFinalizadoException;
+use Alura\Leilao\Exception\LeilaoVazioException;
 use Alura\Leilao\Model\Lance;
 use Alura\Leilao\Model\Leilao;
 use Alura\Leilao\Model\Usuario;
@@ -11,8 +13,12 @@ use PHPUnit\Framework\TestCase;
 class AvaliadorTest extends TestCase
 {
 
+    /** @var Avaliador */
     private $leiloeiro;
 
+    /**
+     * setUp
+     */
     protected function setUp(): void
     {
         $this->leiloeiro = new Avaliador();
@@ -31,7 +37,7 @@ class AvaliadorTest extends TestCase
         $maiorValor = $this->leiloeiro->getMaiorValor();
 
         // Assert - Then
-        self::assertEquals(2500, $maiorValor);
+        static::assertEquals(2500, $maiorValor);
     }
 
     /**
@@ -47,33 +53,29 @@ class AvaliadorTest extends TestCase
         $menorValor = $this->leiloeiro->getMenorValor();
 
         // Assert - Then
-        self::assertEquals(1700, $menorValor);
+        static::assertEquals(1700, $menorValor);
     }
 
 
-    public function testAvaliadorDeveBuscar3MaioresValores()
+    /**
+     * @dataProvider leilaoEmOrdemAleatoria
+     * @dataProvider leilaoEmOrdemCrescente
+     * @dataProvider leilaoEmOrdemDecrescente
+     */
+    public function testAvaliadorDeveBuscar3MaioresValores(Leilao $leilao)
     {
-        $leilao = new Leilao('Fiat 147 0KM');
-        $joao = new Usuario('João');
-        $maria = new Usuario('Maria');
-        $ana = new Usuario('Ana');
-        $jorge = new Usuario('Jorge');
+        $this->leiloeiro->avalia($leilao);
 
-        $leilao->recebeLance(new Lance($ana, 1500));
-        $leilao->recebeLance(new Lance($joao, 1000));
-        $leilao->recebeLance(new Lance($maria, 2000));
-        $leilao->recebeLance(new Lance($jorge, 1700));
-
-        $leiloeiro = new Avaliador();
-        $leiloeiro->avalia($leilao);
-
-        $maiores = $leiloeiro->getMaioresLances();
+        $maiores = $this->leiloeiro->getMaioresLances();
         static::assertCount(3, $maiores);
-        static::assertEquals(2000, $maiores[0]->getValor());
-        static::assertEquals(1700, $maiores[1]->getValor());
-        static::assertEquals(1500, $maiores[2]->getValor());
+        static::assertEquals(2500, $maiores[0]->getValor());
+        static::assertEquals(2000, $maiores[1]->getValor());
+        static::assertEquals(1700, $maiores[2]->getValor());
     }
 
+    /*
+     * DataProvider de Leilão em Ordem Crescente
+     */
     public function leilaoEmOrdemCrescente()
     {
         $leilao = new Leilao('Fiat 147 0KM');
@@ -91,6 +93,9 @@ class AvaliadorTest extends TestCase
         ];
     }
 
+    /*
+     * DataProvider de Leilão em Ordem Decrescente
+     */
     public function leilaoEmOrdemDecrescente()
     {
         $leilao = new Leilao('Fiat 147 0KM');
@@ -108,6 +113,9 @@ class AvaliadorTest extends TestCase
         ];
     }
 
+    /*
+     * DataProvider de Leilão em Ordem Aleatória
+     */
     public function leilaoEmOrdemAleatoria()
     {
         $leilao = new Leilao('Fiat 147 0KM');
@@ -123,6 +131,31 @@ class AvaliadorTest extends TestCase
         return [
             'ordem-aleatoria' => [$leilao]
         ];
+    }
+
+    /**
+     * Teste para a regra de negócio da qual Leilão Vázio não pode ser Avaliado
+     */
+    public function testLeilaoVazioNaoPodeSerAvaliado()
+    {
+        static::expectException(LeilaoVazioException::class);
+        static::expectExceptionMessage("Não é possível avaliar Leilão vázio");
+
+        $leilao = new Leilao('Fiat 147 0KM');
+        $this->leiloeiro->avalia($leilao);
+    }
+
+    public function testLeilaoFinalizadoNaoPodeSerAvaliado()
+    {
+        static::expectException(LeilaoFinalizadoException::class);
+        static::expectExceptionMessage("Leilão já finalizado");
+
+        $leilao = new Leilao('Fiat 147 0KM');
+        $joao = new Usuario('João');
+        $leilao->recebeLance(new Lance($joao, 2000));
+        $leilao->finaliza();
+
+        $this->leiloeiro->avalia($leilao);
     }
 
 }
