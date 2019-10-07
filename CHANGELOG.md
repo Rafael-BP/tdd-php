@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Quarto tópico do curso
 - Quinto tópico do curso
 - Sexto tópico do curso
+- Certificado do Curso
 
 ### Changed
 - Seção Para rodar o projeto no README

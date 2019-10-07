@@ -28,7 +28,7 @@ docker run --rm --interactive --tty -v ${PWD}:/app --workdir=/app composer insta
 docker run --rm --interactive --tty -v ${PWD}:/app --workdir=/app php:7.3-cli vendor/bin/phpunit --colors tests
 ```
 
-[Certificado]: 
+[Certificado]: https://cursos.alura.com.br/certificate/a4c4a428-50ab-46ed-bb23-7d9aa109da00
 
 [PHP e TDD]: https://cursos.alura.com.br/course/phpunit-tdd
 
