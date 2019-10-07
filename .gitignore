@@ -1,0 +1,11 @@
+### Composer ###
+vendor/
+
+### PhpStorm ###
+.idea/
+
+### Logs ###
+logs/
+
+### PHPUnit ###
+.phpunit.result.cache
