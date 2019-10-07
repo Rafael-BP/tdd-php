@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.0] - 2019-10-07
 ### Added
 - Arquivos iniciais para começo do curso
 - Primeiro tópico do curso
@@ -14,7 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Quarto tópico do curso
 - Quinto tópico do curso
 - Sexto tópico do curso
-- Certificado do Curso
+- Certificado do curso
 
 ### Changed
-- Seção Para rodar o projeto no README
+- Seção para rodar o projeto no README
