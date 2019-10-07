@@ -25,7 +25,7 @@ docker run --rm --interactive --tty -v ${PWD}:/app --workdir=/app composer insta
 
 #### Rodar o projeto
 ```
-docker run --rm --interactive --tty -v ${PWD}:/app --workdir=/app php:7.2-cli vendor/bin/phpunit --colors tests
+docker run --rm --interactive --tty -v ${PWD}:/app --workdir=/app php:7.3-cli vendor/bin/phpunit --colors tests
 ```
 
 [Certificado]: 
